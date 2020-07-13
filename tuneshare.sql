@@ -26,6 +26,10 @@ SET time_zone = "+00:00";
 -- Table structure for table `songs`
 --
 
+DROP DATABASE IF EXISTS tune_share;
+CREATE DATABASE tune_share;
+USE tune_share;
+
 CREATE TABLE `songs` (
   `user_id` int(10) NOT NULL,
   `first_name` varchar(100) NOT NULL,

@@ -1,4 +1,7 @@
-<?php require_once('header.php'); ?>
+<?php 
+    require_once('header.php'); 
+    session_start();
+?>
 <body class="add">
 <div class="container inner saved">
 <header class="masthead mb-auto">
@@ -11,11 +14,20 @@
       </nav>
     </div>
   </header>
-<h1> TuneShare - Share Your Fave Tunes & Join The Community </h1>
+       <?php
+        if(isset($_SESSION['firstname'])){
+            echo '<h1>Hello, '. $_SESSION['firstname'] . '! Share Your Fave Tunes</h1>';
+        }else{
+            echo '<h1> TuneShare - Share Your Fave Tunes & Join The Community </h1>';
+        }
+    
+    ?>
+    
 <main>
     <?php
 
     $first_name = filter_input(INPUT_POST, 'fname');
+        $_SESSION['firstname'] = $first_name;
     $last_name = filter_input(INPUT_POST, 'lname');
     $genre = filter_input(INPUT_POST, 'genre');
     $location = filter_input(INPUT_POST, 'location');
@@ -93,7 +105,7 @@
             require_once('connect.php');
             //if we have an id, that means we are updating 
             if (!empty($id)) {
-                $sql = "UPDATE songs SET first_name = :firstname, last_name = :lastname, genre = :genre, location = :location, email = :email, age = :age, favsong = :favsong, link = :link,  photo = :photo WHERE user_id = :user_id;";
+                $sql = "UPDATE songs SET first_name = :firstname, last_name = :lastname, genre = :genre, location = :location, email = :email, age = :age, favsong = :favsong,  photo = :photo WHERE user_id = :user_id;";
             } else {
                 //this is a new tune we are adding to our app 
                 // set up an SQL command to save the info 
@@ -111,7 +123,7 @@
             $statement->bindParam(':age', $age);
             $statement->bindParam(':favsong', $fav_song);
             $statement->bindParam(':photo', $photo);
-            $statement->bindParam(':link', $link);
+
 
             //if we are updating, bind :user_id 
             if (!empty($id)) {

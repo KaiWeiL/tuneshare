@@ -1,4 +1,7 @@
-<?php require_once('header.php'); ?>
+<?php 
+    require_once('header.php'); 
+    session_start();
+?>
 <body class="view">
 <div class="container inner">
 <header class="masthead mb-auto">
@@ -14,6 +17,13 @@
     <?php
     try {
     //connect to our db 
+    
+        if(isset($_SESSION['firstname'])){
+            echo '<h1>Hello, '. $_SESSION['firstname'] . '! Here Are Your Fave Tunes</h1>';
+        }else{
+            echo '<h1>Share Your Fave Tunes</h1>';
+        }
+    
     require_once('connect.php'); 
 
     //set up SQL statement 
@@ -42,7 +52,7 @@
     }
     catch(PDOException $e) {
         $error_message = $e->getMessage(); 
-        echo "<p> $error message </p>"; 
+        echo "<p> $error_message message </p>"; 
     }
     ?>
     </main>

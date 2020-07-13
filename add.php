@@ -1,4 +1,8 @@
-<?php require_once('header.php'); ?>
+<?php 
+    require_once('header.php'); 
+    session_start();
+?>
+
 <body class="add">
 <div class="container inner">
 <header class="masthead mb-auto">
@@ -58,7 +62,15 @@
     }
     ?>
     <main>
-    <h1>Share Your Fave Tunes</h1>
+    <?php
+        if(isset($_SESSION['firstname'])){
+            echo '<h1>Hello, '. $_SESSION['firstname'] . '! Share Your Fave Tunes</h1>';
+        }else{
+            echo '<h1>Share Your Fave Tunes</h1>';
+        }
+    
+    ?>
+    
       <form action="process.php" method="post" enctype="multipart/form-data" class="form">
         <!-- add hidden input with user id if editing -->
         <input type="hidden" name="user_id" value="<?php echo $id;?>">
@@ -90,10 +102,7 @@
           <label for="favsong"> What Are You Listening To On Repeat?  </label>
           <input type="text" name="favsong" class="form-control" id="favsong" value="<?php echo $favsong;?>">
         </div>
-        <div class="form-group">
-          <label for="link"> Tune Link </label>
-          <input type="url" name="link" class="form-control" id="link" value="<?php echo $link;?>">
-        </div>
+    
         <div class="form-group">
           <label for="profile"> Profile Pic </label>
           <input type="file" name="photo" id="profilepic" value="<?php echo $profile;?>">
